@@ -1,9 +1,9 @@
 class User {
   final String name;
-  final String uniqueIdentifier;
+  final String uniqueId;
 
   User({
-    required this.name,
-    required this.uniqueIdentifier,
+    this.name = "",
+    this.uniqueId = "",
   });
 }

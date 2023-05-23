@@ -7,7 +7,8 @@ import 'package:get_it/get_it.dart';
 
 final locator = GetIt.I;
 void setupLocator() {
-  locator.registerLazySingleton<ISaveUserData>(() => SaveUserData());
+  locator
+      .registerLazySingleton<ISaveUserData>(() => SaveUserData(locator.get()));
   locator.registerLazySingleton<IAuthService>(() => AuthService());
   locator.registerLazySingleton<IValidateCachedUser>(
     () => ValidateCachedUser(
