@@ -7,17 +7,17 @@ class AuthLoadingState extends AuthState {
   List<Object?> get props => [];
 }
 
+class AuthInitialState extends AuthState {
+  @override
+  List<Object?> get props => [];
+}
+
 class AuthSuccessState extends AuthState {
   @override
   List<Object?> get props => [];
 }
 
-class AuthCacheFilledState extends AuthState {
-  @override
-  List<Object?> get props => [];
-}
-
-class AuthCacheEmptyState extends AuthState {
+class AuthErrorState extends AuthState {
   @override
   List<Object?> get props => [];
 }

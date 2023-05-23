@@ -1,4 +1,5 @@
 import 'package:challenge/app/core/di.dart';
+import 'package:challenge/app/core/widgets/cos_loading/cos_loading_widget.dart';
 import 'package:challenge/app/design/global_theme.dart';
 import 'package:challenge/app/modules/auth/presenter/auth_page.dart';
 import 'package:challenge/app/modules/home/presenter/home_page.dart';
@@ -41,9 +42,7 @@ class _SplashPageState extends State<SplashPage> {
       child: const Scaffold(
         backgroundColor: GlobalTheme.grayDark,
         body: Center(
-          child: CircularProgressIndicator(
-            color: GlobalTheme.yellowDark,
-          ),
+          child: CosLoadingWidget(),
         ),
       ),
     );
