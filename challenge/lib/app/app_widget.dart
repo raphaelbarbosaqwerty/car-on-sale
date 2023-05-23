@@ -1,4 +1,4 @@
-import 'package:challenge/app/modules/auth/presenter/auth_page.dart';
+import 'package:challenge/app/modules/splash/presenter/splash_page.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
@@ -7,11 +7,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Car on Sale - Challenge',
-      // theme: ThemeData(
-      //   colorScheme: ColorScheme.fromSeed(seedColor: GlobalTheme.yellowDark),
-      //   useMaterial3: true,
-      // ),
-      home: const AuthPage(),
+      home: SplashPage(),
     );
   }
 }

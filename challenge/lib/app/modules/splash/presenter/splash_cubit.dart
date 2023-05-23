@@ -1,0 +1,18 @@
+import 'package:challenge/app/core/domain/usecases/validate_cached_user.dart';
+import 'package:challenge/app/modules/splash/presenter/splash_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class SplashCubit extends Cubit<SplashState> {
+  final IValidateCachedUser validateCachedUser;
+
+  SplashCubit(this.validateCachedUser) : super(SplashLoadingState());
+
+  Future<void> validateCache() async {
+    final isCached = await validateCachedUser();
+    if (isCached) {
+      emit(SplashCacheFilledState());
+    } else {
+      emit(SplashCacheEmptyState());
+    }
+  }
+}
