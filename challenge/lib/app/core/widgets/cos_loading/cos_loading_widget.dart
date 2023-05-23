@@ -1,4 +1,4 @@
-import 'package:challenge/app/design/global_theme.dart';
+import 'package:challenge/app/design/cos_theme.dart';
 import 'package:flutter/material.dart';
 
 class CosLoadingWidget extends StatelessWidget {
@@ -7,7 +7,7 @@ class CosLoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const CircularProgressIndicator(
-      color: GlobalTheme.yellowDark,
+      color: CosTheme.yellowDark,
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class GlobalTheme {
+class CosTheme {
   static const white = Colors.white;
 
   /// Primary Gray

@@ -1,6 +1,6 @@
 import 'package:challenge/app/core/di.dart';
 import 'package:challenge/app/core/widgets/cos_loading/cos_loading_widget.dart';
-import 'package:challenge/app/design/global_theme.dart';
+import 'package:challenge/app/design/cos_theme.dart';
 import 'package:challenge/app/modules/auth/presenter/auth_page.dart';
 import 'package:challenge/app/modules/home/presenter/home_page.dart';
 import 'package:challenge/app/modules/splash/presenter/splash_cubit.dart';
@@ -40,7 +40,7 @@ class _SplashPageState extends State<SplashPage> {
         }
       },
       child: const Scaffold(
-        backgroundColor: GlobalTheme.grayDark,
+        backgroundColor: CosTheme.grayDark,
         body: Center(
           child: CosLoadingWidget(),
         ),
