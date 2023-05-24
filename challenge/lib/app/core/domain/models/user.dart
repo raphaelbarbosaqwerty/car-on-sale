@@ -1,9 +1,9 @@
 class User {
   final String name;
-  final String uniqueId;
+  final String email;
 
   User({
     this.name = "",
-    this.uniqueId = "",
+    this.email = "",
   });
 }

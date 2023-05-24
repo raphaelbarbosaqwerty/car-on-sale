@@ -1,5 +1,6 @@
 import 'package:challenge/app/core/di.dart';
 import 'package:challenge/app/core/domain/models/user.dart';
+import 'package:challenge/app/core/domain/validators/text_form_validator.dart';
 import 'package:challenge/app/core/widgets/cos_loading/cos_loading_widget.dart';
 import 'package:challenge/app/design/cos_theme.dart';
 import 'package:challenge/app/modules/auth/presenter/auth_cubit.dart';
@@ -16,8 +17,9 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final ValueNotifier<bool> isButtonValid = ValueNotifier(false);
   final AuthCubit cubit = locator.get<AuthCubit>();
-
   late final TextEditingController name;
   late final TextEditingController email;
 
@@ -35,67 +37,85 @@ class _AuthPageState extends State<AuthPage> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextFormField(
-                controller: name,
-                decoration: const InputDecoration(
-                  hintText: "Name",
-                  border: OutlineInputBorder(),
+          child: Form(
+            onChanged: () {
+              isButtonValid.value = _formKey.currentState?.validate() ?? false;
+            },
+            autovalidateMode: AutovalidateMode.always,
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextFormField(
+                  controller: name,
+                  decoration: const InputDecoration(
+                    hintText: "Name",
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) =>
+                      TextFormValidator.validateFieldEmpty(value),
                 ),
-              ),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: email,
-                decoration: const InputDecoration(
-                  hintText: "Unique identifier",
-                  border: OutlineInputBorder(),
+                const SizedBox(height: 12),
+                TextFormField(
+                  controller: email,
+                  decoration: const InputDecoration(
+                    hintText: "Email",
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) =>
+                      TextFormValidator.validateFieldEmail(value),
                 ),
-              ),
-              const SizedBox(height: 24),
-              BlocListener<AuthCubit, AuthState>(
-                bloc: cubit,
-                listener: (context, state) {
-                  if (state is AuthSuccessState) {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => const HomePage(),
-                      ),
-                    );
-                  } else if (state is AuthErrorState) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Error!"),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
-                  }
-                },
-                child: BlocBuilder<AuthCubit, AuthState>(
+                const SizedBox(height: 24),
+                BlocListener<AuthCubit, AuthState>(
                   bloc: cubit,
-                  builder: (context, state) {
-                    if (state is AuthLoadingState) {
-                      return const Center(
-                        child: CosLoadingWidget(),
+                  listener: (context, state) {
+                    if (state is AuthSuccessState) {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => const HomePage(),
+                        ),
+                      );
+                    } else if (state is AuthErrorState) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Error!"),
+                          backgroundColor: Colors.red,
+                        ),
                       );
                     }
-                    return ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: CosTheme.grayDark, // Background color
-                      ),
-                      onPressed: () async {
-                        await cubit.save(User(
-                          name: name.text,
-                          uniqueId: email.text,
-                        ));
-                      },
-                      child: const Text('Enter'),
-                    );
                   },
-                ),
-              )
-            ],
+                  child: BlocBuilder<AuthCubit, AuthState>(
+                    bloc: cubit,
+                    builder: (context, state) {
+                      if (state is AuthLoadingState) {
+                        return const Center(
+                          child: CosLoadingWidget(),
+                        );
+                      }
+                      return ValueListenableBuilder(
+                          valueListenable: isButtonValid,
+                          builder: (context, _isValid, _) {
+                            return ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    CosTheme.grayDark, // Background color
+                              ),
+                              onPressed: _isValid
+                                  ? () async {
+                                      await cubit.save(User(
+                                        name: name.text,
+                                        email: email.text,
+                                      ));
+                                    }
+                                  : null,
+                              child: const Text('Enter'),
+                            );
+                          });
+                    },
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

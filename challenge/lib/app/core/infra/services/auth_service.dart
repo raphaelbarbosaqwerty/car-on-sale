@@ -7,16 +7,20 @@ import 'package:hive_flutter/hive_flutter.dart';
 class AuthService implements IAuthService {
   @override
   Future<User> getCachedUser() async {
-    final userBox = await _getUserBox();
-    final String id = await userBox.get('unique_id', defaultValue: "");
-    if (id.isEmpty) {
-      throw UserNotFound();
-    }
+    try {
+      final userBox = await _getUserBox();
+      final String id = await userBox.get('unique_id', defaultValue: "");
+      if (id.isEmpty) {
+        throw UserNotFound();
+      }
 
-    return User(
-      name: await userBox.get('name', defaultValue: ""),
-      uniqueId: id,
-    );
+      return User(
+        name: await userBox.get('name', defaultValue: ""),
+        email: id,
+      );
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override
@@ -24,7 +28,7 @@ class AuthService implements IAuthService {
     try {
       final userBox = await _getUserBox();
       userBox.put('name', user.name);
-      userBox.put('unique_id', user.uniqueId);
+      userBox.put('unique_id', user.email);
       return true;
     } catch (e) {
       return false;

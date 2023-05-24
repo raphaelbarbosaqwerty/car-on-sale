@@ -6,6 +6,8 @@ Flutter version `3.10.0`
 
 Step 1: ✔️
 
+- Validate fields.
+
 ## Tests
 
 ## Knowledge

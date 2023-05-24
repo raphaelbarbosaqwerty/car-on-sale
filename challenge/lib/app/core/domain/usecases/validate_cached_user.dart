@@ -13,7 +13,7 @@ class ValidateCachedUser implements IValidateCachedUser {
   Future<bool> call() async {
     final response = await service.getCachedUser();
     await Future.delayed(const Duration(seconds: 1));
-    if (response.uniqueId.isNotEmpty) {
+    if (response.email.isNotEmpty) {
       return true;
     }
     return false;
