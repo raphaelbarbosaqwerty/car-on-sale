@@ -9,16 +9,16 @@ import 'package:mocktail/mocktail.dart';
 class MockAuthService extends Mock implements IAuthService {}
 
 void main() {
+  late MockAuthService service;
+  late ISaveUserData saveUserData;
+  final user = User(name: 'John Doe', email: 'john.doe@example.com');
+
+  setUpAll(() {
+    service = MockAuthService();
+    saveUserData = SaveUserData(service);
+  });
+
   group('SaveUserData', () {
-    late MockAuthService service;
-    late ISaveUserData saveUserData;
-    final user = User(name: 'John Doe', email: 'john.doe@example.com');
-
-    setUpAll(() {
-      service = MockAuthService();
-      saveUserData = SaveUserData(service);
-    });
-
     test('should return true if the user is saved', () async {
       when(() => service.saveUser(user)).thenAnswer((_) async => true);
       final response = await saveUserData(user);

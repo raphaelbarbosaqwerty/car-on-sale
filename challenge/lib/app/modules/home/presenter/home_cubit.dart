@@ -10,7 +10,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future<void> searchByVin(String vin) async {
     searchCarByVinNumber(vin).then((value) {
-      print(value);
+      emit(HomeSuccessState(value));
     }).onError((Failure error, stackTrace) {
       emit(HomeErrorState(error.message));
     });
