@@ -11,7 +11,11 @@ Step 1: ✔️
 ## Tests
 
 1. Usecases.
+   1. ValidateCachedUser
+   2. SaveUserData
 2. Cubit.
+   1. SplashCubit.
+   2. AuthCubit.
 3. Services.
 4. Repositories
 

@@ -9,16 +9,16 @@ import 'package:mocktail/mocktail.dart';
 class MockAuthService extends Mock implements IAuthService {}
 
 void main() {
+  late MockAuthService service;
+  late IValidateCachedUser validateCachedUser;
+  final user = User(name: 'John Doe', email: 'john.doe@example.com');
+
+  setUpAll(() {
+    service = MockAuthService();
+    validateCachedUser = ValidateCachedUser(service);
+  });
+
   group('ValidateCachedUser', () {
-    late MockAuthService service;
-    late IValidateCachedUser validateCachedUser;
-    final user = User(name: 'John Doe', email: 'john.doe@example.com');
-
-    setUpAll(() {
-      service = MockAuthService();
-      validateCachedUser = ValidateCachedUser(service);
-    });
-
     test('should return true if has the user on cache', () async {
       when(() => service.getCachedUser()).thenAnswer((_) async => user);
       final response = await validateCachedUser();

@@ -8,43 +8,41 @@ import 'package:mocktail/mocktail.dart';
 class MockValidateCachedUser extends Mock implements IValidateCachedUser {}
 
 void main() {
+  late MockValidateCachedUser validateCachedUser;
+
+  setUpAll(() {
+    validateCachedUser = MockValidateCachedUser();
+  });
+
   group('SplashCubit', () {
-    late MockValidateCachedUser validateCachedUser;
+    blocTest<SplashCubit, SplashState>(
+      'emits [] when nothing is called',
+      build: () => SplashCubit(validateCachedUser),
+      expect: () => const <SplashState>[],
+    );
 
-    setUpAll(() {
-      validateCachedUser = MockValidateCachedUser();
-    });
+    blocTest<SplashCubit, SplashState>(
+      'emits [SplashCacheFilledState] when validateCachedUser is true',
+      build: () => SplashCubit(validateCachedUser),
+      act: (cubit) async {
+        when(() => validateCachedUser()).thenAnswer((_) async => true);
+        await cubit.validateCache();
+      },
+      expect: () => <SplashState>[
+        SplashCacheFilledState(),
+      ],
+    );
 
-    group('SplashCubit', () {
-      blocTest<SplashCubit, SplashState>(
-        'emits [] when nothing is called',
-        build: () => SplashCubit(validateCachedUser),
-        expect: () => const <SplashState>[],
-      );
-
-      blocTest<SplashCubit, SplashState>(
-        'emits [SplashCacheFilledState] when validateCachedUser is true',
-        build: () => SplashCubit(validateCachedUser),
-        act: (cubit) async {
-          when(() => validateCachedUser()).thenAnswer((_) async => true);
-          await cubit.validateCache();
-        },
-        expect: () => <SplashState>[
-          SplashCacheFilledState(),
-        ],
-      );
-
-      blocTest<SplashCubit, SplashState>(
-        'emits [SplashCacheEmptyState] when validateCachedUser is false',
-        build: () => SplashCubit(validateCachedUser),
-        act: (cubit) async {
-          when(() => validateCachedUser()).thenAnswer((_) async => false);
-          await cubit.validateCache();
-        },
-        expect: () => <SplashState>[
-          SplashCacheEmptyState(),
-        ],
-      );
-    });
+    blocTest<SplashCubit, SplashState>(
+      'emits [SplashCacheEmptyState] when validateCachedUser is false',
+      build: () => SplashCubit(validateCachedUser),
+      act: (cubit) async {
+        when(() => validateCachedUser()).thenAnswer((_) async => false);
+        await cubit.validateCache();
+      },
+      expect: () => <SplashState>[
+        SplashCacheEmptyState(),
+      ],
+    );
   });
 }
