@@ -1,3 +1,4 @@
+import 'package:challenge/app/core/domain/models/car_information.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class HomeState extends Equatable {}
@@ -8,6 +9,23 @@ class HomeLoadingState extends HomeState {
 }
 
 class HomeSuccessState extends HomeState {
+  final CarInformation carInformation;
+
+  HomeSuccessState(this.carInformation);
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [
+        carInformation,
+      ];
+}
+
+class HomeErrorState extends HomeState {
+  final String message;
+
+  HomeErrorState([this.message = ""]);
+
+  @override
+  List<Object?> get props => [
+        message,
+      ];
 }

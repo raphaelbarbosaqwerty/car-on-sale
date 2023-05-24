@@ -14,4 +14,7 @@ class CosTheme {
 
   /// Secondary Yellow
   static const yellowLight = Color(0xfffdf0c0);
+
+  /// Primary Red
+  static const redAlert = Colors.red;
 }

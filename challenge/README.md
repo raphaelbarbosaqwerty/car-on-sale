@@ -14,3 +14,9 @@ Step 1: ✔️
 2. Repositories == External.
 
 ## Explain why decided to remove the Datasource.
+
+## Doubts about the challenge
+
+1. 200 Status code has an error in the Json. (Resolved using the Pattern-Matching)
+
+## Records or Package?
