@@ -20,4 +20,16 @@ class TextFormValidator {
 
     return null;
   }
+
+  static String? validateVinCode(String? validate, {String? message}) {
+    if ((validate ?? "").length < 17) {
+      return message ?? "VIN should contain 17 characters";
+    }
+
+    if ((validate ?? "").isEmpty) {
+      return message ?? "The Field shouldn't be empty";
+    }
+
+    return null;
+  }
 }
