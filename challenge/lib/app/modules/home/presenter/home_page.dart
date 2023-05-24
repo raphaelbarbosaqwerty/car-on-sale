@@ -1,3 +1,5 @@
+import 'package:challenge/app/core/di.dart';
+import 'package:challenge/app/modules/home/presenter/home_cubit.dart';
 import 'package:challenge/app/modules/home/presenter/widgets/logout/logout_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +11,17 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
+  final ValueNotifier showSearchButton = ValueNotifier(false);
+  final HomeCubit cubit = locator.get<HomeCubit>();
+  late final TextEditingController code;
+  int vinLength = 17;
+
+  @override
+  void initState() {
+    super.initState();
+    code = TextEditingController();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,24 +31,53 @@ class HomePageState extends State<HomePage> {
           LogoutWidget(),
         ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            // const Text(
-            //   'You have pushed the button this many times:',
-            // ),
-            // Text(
-            //   "Test",
-            //   style: Theme.of(context).textTheme.headlineMedium,
-            // ),
-          ],
+      body: Padding(
+        padding: const EdgeInsets.all(24),
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                onChanged: (value) {
+                  if (value.length == 17) {
+                    showSearchButton.value = true;
+                  } else {
+                    showSearchButton.value = false;
+                  }
+                },
+                maxLength: 17,
+                controller: code,
+                decoration: const InputDecoration(
+                  hintText: "VIN Code",
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              // const Text(
+              //   'You have pushed the button this many times:',
+              // ),
+              // Text(
+              //   "Test",
+              //   style: Theme.of(context).textTheme.headlineMedium,
+              // ),
+            ],
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      floatingActionButton: ValueListenableBuilder(
+        valueListenable: showSearchButton,
+        builder: (context, showButton, _) {
+          return Visibility(
+            visible: showButton,
+            child: FloatingActionButton(
+              onPressed: () async {
+                await cubit.searchCarByVinNumber(code.text);
+              },
+              tooltip: 'Increment',
+              child: const Icon(
+                Icons.search,
+              ),
+            ),
+          );
+        },
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

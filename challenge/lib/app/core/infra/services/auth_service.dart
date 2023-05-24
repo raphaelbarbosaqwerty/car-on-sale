@@ -1,6 +1,6 @@
 import 'package:challenge/app/core/domain/errors/user_errors.dart';
 import 'package:challenge/app/core/domain/models/user.dart';
-import 'package:challenge/app/core/domain/services/auth_service.dart';
+import 'package:challenge/app/core/domain/services/auth_service_interface.dart';
 import 'package:challenge/app/utils/cos_constants.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 

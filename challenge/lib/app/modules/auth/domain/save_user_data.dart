@@ -1,5 +1,5 @@
 import 'package:challenge/app/core/domain/models/user.dart';
-import 'package:challenge/app/core/domain/services/auth_service.dart';
+import 'package:challenge/app/core/domain/services/auth_service_interface.dart';
 
 abstract class ISaveUserData {
   Future<bool> call(User user);

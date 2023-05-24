@@ -1,4 +1,4 @@
-import 'package:challenge/app/core/domain/services/auth_service.dart';
+import 'package:challenge/app/core/domain/services/auth_service_interface.dart';
 
 abstract class IValidateCachedUser {
   Future<bool> call();
