@@ -1,5 +1,6 @@
 import 'package:challenge/app/core/di.dart';
 import 'package:challenge/app/core/domain/validators/text_form_validator.dart';
+import 'package:challenge/app/core/widgets/cos_loading/cos_loading_widget.dart';
 import 'package:challenge/app/design/cos_theme.dart';
 import 'package:challenge/app/modules/home/presenter/home_cubit.dart';
 import 'package:challenge/app/modules/home/presenter/home_state.dart';
@@ -49,6 +50,7 @@ class HomePageState extends State<HomePage> {
         bloc: cubit,
         listener: (context, state) {
           if (state is HomeErrorState) {
+            isButtonValid.value = true;
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
@@ -67,12 +69,7 @@ class HomePageState extends State<HomePage> {
               _defineDelayIfExist(state.apiError?.params.delaySeconds ?? 0);
             }
           } else if (state is HomeSuccessState) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text("Success!"),
-                backgroundColor: CosTheme.greenAlert,
-              ),
-            );
+            isButtonValid.value = true;
           }
         },
         child: Padding(
@@ -113,22 +110,31 @@ class HomePageState extends State<HomePage> {
       ),
       floatingActionButton: ValueListenableBuilder(
         valueListenable: isButtonValid,
-        builder: (context, showButton, _) {
+        builder: (context, isValid, _) {
           return FloatingActionButton(
-            backgroundColor: showButton
+            backgroundColor: isValid
                 ? CosTheme.grayDark
                 : CosTheme.grayDark.withOpacity(0.5),
-            elevation: showButton ? 6 : 0,
+            elevation: isValid ? 6 : 0,
             onPressed: () async {
               isButtonValid.value = false;
               await cubit.searchByVin(code.text);
-              isButtonValid.value = true;
             },
-            child: delay != 0
-                ? Text("$delay")
-                : const Icon(
-                    Icons.search,
-                  ),
+            child: Builder(
+              builder: (_) {
+                if (delay != 0) {
+                  return Text("$delay");
+                }
+
+                if (!isValid && delay == 0) {
+                  return const CosLoadingWidget();
+                }
+
+                return const Icon(
+                  Icons.search,
+                );
+              },
+            ),
           );
         },
       ), // This trailing comma makes auto-formatting nicer for build methods.
