@@ -11,7 +11,7 @@ class TextFormValidator {
 
   static String? validateFieldEmail(String? validate, {String? message}) {
     if (!EmailValidator.validate(validate ?? "")) {
-      return "Email invalid";
+      return message ?? "Email invalid";
     }
 
     if ((validate ?? "").isEmpty) {
