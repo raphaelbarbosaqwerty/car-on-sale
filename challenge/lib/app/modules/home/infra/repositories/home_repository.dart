@@ -51,7 +51,6 @@ class HomeRepository implements IHomeRepository {
     } on InternalApiError {
       rethrow;
     } catch (e) {
-      print(e);
       throw UnknowError("Error! Contact support.");
     }
   }

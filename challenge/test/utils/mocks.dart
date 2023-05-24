@@ -61,6 +61,15 @@ const multiplesOptionsStatus300 = '''
     }
 ]''';
 
+const oneOptionStatus300 = '''
+{
+  "make": "Toyota",
+  "model": "GT 86 Basis",
+  "containerName": "DE - Cp2 2.0 EU6, Basis, 2017 - 2020",
+  "similarity": 98,
+  "externalId": "DE003-018601450020001"
+}''';
+
 const forceUnknowError = '''
 [
     {
@@ -92,4 +101,8 @@ const error400 = '''
   "params": { "delaySeconds": "1337" },
   "message": "Please try again in 1337 seconds"
   }
+''';
+
+const paramsError400 = '''
+{ "delaySeconds": "1337" }
 ''';
