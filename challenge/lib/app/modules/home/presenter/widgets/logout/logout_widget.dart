@@ -37,6 +37,7 @@ class _LogoutWidgetState extends State<LogoutWidget> {
         }
       },
       child: IconButton(
+        key: const Key('logout'),
         onPressed: () async {
           await cubit.logout();
         },

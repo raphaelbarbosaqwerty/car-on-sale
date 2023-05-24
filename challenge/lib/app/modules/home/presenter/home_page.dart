@@ -107,6 +107,7 @@ class HomePageState extends State<HomePage> {
                           onFieldSubmitted,
                         ) {
                           return TextFormField(
+                            key: const Key("vinCode"),
                             inputFormatters: [
                               FilteringTextInputFormatter.deny(
                                 RegExp(r"\s\b|\b\s"),
@@ -170,6 +171,7 @@ class HomePageState extends State<HomePage> {
         valueListenable: isButtonValid,
         builder: (context, isValid, _) {
           return FloatingActionButton(
+            key: const Key('search'),
             backgroundColor: isValid
                 ? CosTheme.grayDark
                 : CosTheme.grayDark.withOpacity(0.5),

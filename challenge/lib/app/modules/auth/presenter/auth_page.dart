@@ -49,6 +49,7 @@ class _AuthPageState extends State<AuthPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFormField(
+                  key: const Key("name"),
                   controller: name,
                   decoration: const InputDecoration(
                     hintText: "Name",
@@ -59,6 +60,7 @@ class _AuthPageState extends State<AuthPage> {
                 ),
                 const SizedBox(height: 12),
                 TextFormField(
+                  key: const Key("email"),
                   controller: email,
                   decoration: const InputDecoration(
                     hintText: "Email",
@@ -98,6 +100,7 @@ class _AuthPageState extends State<AuthPage> {
                           valueListenable: isButtonValid,
                           builder: (context, _isValid, _) {
                             return ElevatedButton(
+                              key: const Key("enter"),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor:
                                     CosTheme.grayDark, // Background color
