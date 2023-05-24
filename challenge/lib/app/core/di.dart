@@ -10,6 +10,7 @@ import 'package:challenge/app/modules/home/infra/repositories/home_repository.da
 import 'package:challenge/app/modules/home/presenter/home_cubit.dart';
 import 'package:challenge/app/modules/home/presenter/widgets/logout/logout_cubit.dart';
 import 'package:challenge/app/modules/splash/presenter/splash_cubit.dart';
+import 'package:challenge/app/utils/cos_client.dart';
 import 'package:get_it/get_it.dart';
 
 final locator = GetIt.I;
@@ -20,7 +21,8 @@ void setupLocator() {
   locator.registerLazySingleton<HomeCubit>(() => HomeCubit(locator.get()));
   locator.registerLazySingleton<LogoutCubit>(() => LogoutCubit(locator.get()));
   locator.registerLazySingleton<IDoLogout>(() => DoLogout(locator.get()));
-  locator.registerLazySingleton<IHomeRepository>(() => HomeRepository());
+  locator.registerLazySingleton<IHomeRepository>(
+      () => HomeRepository(CosChallenge.httpClient));
   locator.registerLazySingleton<ISearchCarByVinNumber>(
       () => SearchCarByVinNumber(locator.get()));
   locator.registerLazySingleton<IValidateCachedUser>(

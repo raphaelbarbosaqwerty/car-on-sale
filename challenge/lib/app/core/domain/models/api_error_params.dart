@@ -6,7 +6,7 @@ class ApiErrorParams {
   });
 
   factory ApiErrorParams.fromJson(Map<String, dynamic> json) => ApiErrorParams(
-        delaySeconds: json["delaySeconds"],
+        delaySeconds: int.tryParse(json["delaySeconds"]) ?? 0,
       );
 
   Map<String, dynamic> toJson() => {
