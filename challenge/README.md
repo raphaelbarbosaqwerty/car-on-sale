@@ -4,9 +4,32 @@ Flutter version `3.10.0`
 
 ## Tasks
 
-Step 1: ✔️
+Step 1: Identify User ✔️.
 
-- Validate fields.
+- Bonus task: Save local ✔️.
+
+Step 2: Errors ✔️.
+
+- Bonus: Validate Vin and Show error ✔️.
+
+Step 3: Process the intermediate states ✔️.
+
+- Bonus: Show by similarity ❎.
+
+Step 4: Cache ❎.
+
+- Bonus: If happen error, show cached version ❎.
+
+Step 5: UX/UI ❎.
+
+- Bonus: Show Feedback ❎.
+
+Step 6: Documentation about the Flow.
+
+Step 7: Unit Tests
+
+- Bonus: E2E
+- Bonus: Coverage +70%
 
 ## Tests
 
