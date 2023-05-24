@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:challenge/app/core/domain/errors/api_errors.dart';
 import 'package:challenge/app/core/domain/models/car_additional_info.dart';
@@ -94,10 +93,32 @@ void main() {
             uri,
             headers: headers,
           )).thenAnswer(
-        (_) async => jsonDecode(carInformationWithWrongJsonFormat),
+        (_) async => Response(
+          carInformationWithWrongJsonFormat,
+          200,
+        ),
       );
       expect(() async => await repository.searchCarByVin(vin),
           throwsA(isA<IncorrectJsonFormat>()));
+    });
+
+    test(
+        'should return the UnknowError as Failure when some strange error happens',
+        () async {
+      when(() => httpClient.get(
+            uri,
+            headers: headers,
+          )).thenAnswer(
+        (_) async => Response(
+          forceUnknowError,
+          300,
+        ),
+      );
+
+      expect(
+        () async => await repository.searchCarByVin(vin),
+        throwsA(isA<UnknowError>()),
+      );
     });
   });
 

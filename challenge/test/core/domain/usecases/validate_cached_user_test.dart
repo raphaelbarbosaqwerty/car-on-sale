@@ -9,8 +9,8 @@ import 'package:mocktail/mocktail.dart';
 class MockAuthService extends Mock implements IAuthService {}
 
 void main() {
-  late MockAuthService service;
-  late IValidateCachedUser validateCachedUser;
+  late final MockAuthService service;
+  late final IValidateCachedUser validateCachedUser;
   final user = User(name: 'John Doe', email: 'john.doe@example.com');
 
   setUpAll(() {

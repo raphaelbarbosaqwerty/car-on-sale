@@ -61,6 +61,31 @@ const multiplesOptionsStatus300 = '''
     }
 ]''';
 
+const forceUnknowError = '''
+[
+    {
+        "make": 1,
+        "model": "GT 86 Basis",
+        "containerName": "DE - Cp2 2.0 EU5, 2012 - 2015",
+        "similarity": 85,
+        "externalId": "DE001-018601450020001"
+    },
+    {
+        "make": "Toyota",
+        "model": "GT 86 Basis",
+        "containerName": "DE - Cp2 2.0 EU6, (EURO 6), 2015 - 2017",
+        "similarity": 50,
+        "externalId": "DE002-018601450020001"
+    },
+    {
+        "make": "Toyota",
+        "model": "GT 86 Basis",
+        "containerName": "DE - Cp2 2.0 EU6, Basis, 2017 - 2020",
+        "similarity": 0,
+        "externalId": "DE003-018601450020001"
+    }
+]''';
+
 const error400 = '''
 {
   "msgKey": "maintenance",

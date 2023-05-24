@@ -34,7 +34,6 @@ dependencies:
   bloc: ^8.1.2
   http: ^1.0.0
   get_it: ^7.6.0
-  mocktail: ^0.3.0
   equatable: ^2.0.5
   bloc_test: ^9.1.2
   result_dart: ^1.0.6
@@ -49,6 +48,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  hive_test: ^1.0.1
+  mocktail: ^0.3.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
