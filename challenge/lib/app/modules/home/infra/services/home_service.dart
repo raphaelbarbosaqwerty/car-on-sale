@@ -1,5 +1,6 @@
 import 'package:challenge/app/core/domain/models/car_additional_info.dart';
 import 'package:challenge/app/core/domain/models/car_information.dart';
+import 'package:challenge/app/modules/home/domain/errors/home_errors.dart';
 import 'package:challenge/app/modules/home/domain/services/home_service_interface.dart';
 import 'package:challenge/app/utils/cos_constants.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -18,7 +19,7 @@ class HomeService implements IHomeService {
         CarAdditionalInfo.toJsonList(cars),
       );
     } catch (e) {
-      rethrow;
+      throw UnableToCacheSuggestions();
     }
   }
 
@@ -38,7 +39,7 @@ class HomeService implements IHomeService {
 
       return response.map((e) => CarAdditionalInfo.fromJson(e)).toList();
     } catch (e) {
-      rethrow;
+      throw UnableToGetSuggestions();
     }
   }
 
@@ -55,7 +56,7 @@ class HomeService implements IHomeService {
         car.toJson(),
       );
     } catch (e) {
-      rethrow;
+      throw UnableToSaveCarInformation();
     }
   }
 
@@ -74,7 +75,7 @@ class HomeService implements IHomeService {
 
       return CarInformation.fromJson(response);
     } catch (e) {
-      rethrow;
+      throw UnableToGetCarInformation();
     }
   }
 
