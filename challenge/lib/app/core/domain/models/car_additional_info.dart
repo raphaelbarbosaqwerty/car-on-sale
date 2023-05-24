@@ -1,9 +1,9 @@
 class CarAdditionalInfo {
-  String make;
-  String model;
-  String containerName;
-  int similarity;
-  String externalId;
+  final String make;
+  final String model;
+  final String containerName;
+  final int similarity;
+  final String externalId;
 
   CarAdditionalInfo({
     required this.make,

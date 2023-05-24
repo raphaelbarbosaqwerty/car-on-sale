@@ -76,4 +76,9 @@ class CarInformation {
         "origin": origin,
         "estimationRequestId": estimationRequestId,
       };
+
+  String formatedPrice() {
+    final response = int.tryParse(price) ?? 0;
+    return (response / 100).toString();
+  }
 }

@@ -1,9 +1,11 @@
 import 'package:challenge/app/core/di.dart';
 import 'package:challenge/app/core/domain/models/car_additional_info.dart';
+import 'package:challenge/app/core/domain/models/car_information.dart';
 import 'package:challenge/app/core/domain/validators/text_form_validator.dart';
 import 'package:challenge/app/design/cos_theme.dart';
 import 'package:challenge/app/modules/home/presenter/home_cubit.dart';
 import 'package:challenge/app/modules/home/presenter/home_state.dart';
+import 'package:challenge/app/modules/home/presenter/pages/show_car_page.dart';
 import 'package:challenge/app/modules/home/presenter/widgets/cos_preview_car_suggestions/cos_preview_car_suggestions_widget.dart';
 import 'package:challenge/app/modules/home/presenter/widgets/logout/logout_widget.dart';
 import 'package:challenge/app/utils/delayed_action.dart';
@@ -53,13 +55,13 @@ class HomePageState extends State<HomePage> {
         bloc: cubit,
         listener: (context, state) {
           if (state is HomeErrorState) {
-            isButtonValid.value = true;
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
                 backgroundColor: CosTheme.redAlert,
               ),
             );
+            isButtonValid.value = true;
           } else if (state is HomeErrorWithExtraState) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -73,7 +75,9 @@ class HomePageState extends State<HomePage> {
             }
           } else if (state is HomeSuccessState) {
             isButtonValid.value = true;
-            if (state.foundCar()) {}
+            if (state.foundCar()) {
+              _moveToShowPage(state.carInformation);
+            }
           }
         },
         child: Padding(
@@ -125,8 +129,13 @@ class HomePageState extends State<HomePage> {
                         optionsViewBuilder: (_, onSelected, optionsList) {
                           if (state is HomeSuccessState) {
                             final suggestions = state.suggestions;
-                            return CosPreviewCarSuggestionsWidget(
-                              suggestions: suggestions,
+                            return GestureDetector(
+                              onTap: () {
+                                // _moveToShowPage(sugge);
+                              },
+                              child: CosPreviewCarSuggestionsWidget(
+                                suggestions: suggestions,
+                              ),
                             );
                           }
 
@@ -194,6 +203,16 @@ class HomePageState extends State<HomePage> {
           });
         }
       },
+    );
+  }
+
+  Future<void> _moveToShowPage(CarInformation car) async {
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => ShowCarPage(
+          carInformation: car,
+        ),
+      ),
     );
   }
 }

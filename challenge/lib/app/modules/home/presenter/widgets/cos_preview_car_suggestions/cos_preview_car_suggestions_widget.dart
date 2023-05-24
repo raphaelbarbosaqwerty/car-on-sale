@@ -22,16 +22,9 @@ class CosPreviewCarSuggestionsWidget extends StatelessWidget {
             itemCount: suggestions.length,
             itemBuilder: (BuildContext context, int index) {
               final car = suggestions[index];
-
-              return GestureDetector(
-                onTap: () {
-                  print(car.externalId);
-                  // onSelected(option);
-                },
-                child: ListTile(
-                  title: Text(
-                    "${car.externalId} - ${car.make} - ${car.similarity}",
-                  ),
+              return ListTile(
+                title: Text(
+                  "${car.externalId} - ${car.make} - ${car.similarity}",
                 ),
               );
             },
