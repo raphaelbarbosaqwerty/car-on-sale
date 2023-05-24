@@ -42,7 +42,7 @@ void main() {
         'emits [AuthErrorState] when saveUserData is false',
         build: () => AuthCubit(saveUserData),
         act: (cubit) async {
-          final user = User(name: '', email: '');
+          const user = User(name: '', email: '');
           when(() => saveUserData(user)).thenThrow(EmptyCredentials());
           await cubit.save(user);
         },

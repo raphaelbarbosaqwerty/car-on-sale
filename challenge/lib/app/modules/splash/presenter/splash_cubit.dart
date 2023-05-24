@@ -15,7 +15,7 @@ class SplashCubit extends Cubit<SplashState> {
         emit(SplashCacheEmptyState());
       }
     }).onError((error, stackTrace) {
-      SplashCacheEmptyState();
+      emit(SplashCacheEmptyState());
     });
   }
 }
