@@ -7,14 +7,16 @@ Flutter version `3.10.0`
 Step 1: Identify User ✔️.
 
 - Bonus task: Save local ✔️.
+- Unit tests ✔️
 
 Step 2: Errors ✔️.
 
 - Bonus: Validate Vin and Show error ✔️.
+- Unit tests ✔️
 
 Step 3: Process the intermediate states ✔️.
 
-- Bonus: Show by similarity ❎.
+- Bonus: Show by similarity ✔️.
 
 Step 4: Cache ❎.
 

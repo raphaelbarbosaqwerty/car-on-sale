@@ -25,12 +25,18 @@ class HomeService implements IHomeService {
   @override
   Future<List<CarAdditionalInfo>> getSuggestions() async {
     try {
+      final List<CarAdditionalInfo> ready = [];
       final suggestionBox = await _getBox(CosConstants.carsSuggestion);
-      final List<Map<String, dynamic>> response = await suggestionBox.get(
+      final List<dynamic> response = await suggestionBox.get(
         'suggestions',
-        defaultValue: <Map<String, dynamic>>[],
+        defaultValue: [],
       );
-      return CarAdditionalInfo.fromJsonList(response);
+
+      if (ready.isEmpty) {
+        return [];
+      }
+
+      return response.map((e) => CarAdditionalInfo.fromJson(e)).toList();
     } catch (e) {
       rethrow;
     }
@@ -59,8 +65,13 @@ class HomeService implements IHomeService {
       final suggestionBox = await _getBox(CosConstants.carsSuggestion);
       final Map<String, dynamic> response = await suggestionBox.get(
         'car',
-        defaultValue: {},
+        defaultValue: <String, dynamic>{},
       );
+
+      if (response.isEmpty) {
+        return CarInformation();
+      }
+
       return CarInformation.fromJson(response);
     } catch (e) {
       rethrow;

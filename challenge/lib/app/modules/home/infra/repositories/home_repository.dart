@@ -23,8 +23,8 @@ class HomeRepository implements IHomeRepository {
 
     // return (CarInformation(), carListSimilarities);
 
-    final carDecoded = CarInformation.fromJson(jsonDecode(works));
-    return (carDecoded, <CarAdditionalInfo>[]);
+    // final carDecoded = CarInformation.fromJson(jsonDecode(works));
+    // return (carDecoded, <CarAdditionalInfo>[]);
 
     try {
       final response = await client.get(

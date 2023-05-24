@@ -26,18 +26,18 @@ class SearchCarByVinNumber implements ISearchCarByVinNumber {
     final car = response.$1;
     final suggestions = _orderBySimilarity(response.$2);
 
-    // if (car.externalId.isEmpty && suggestions.isNotEmpty) {
-    //   await service.saveSuggestions(suggestions);
-    // }
+    if (suggestions.isNotEmpty) {
+      await service.saveSuggestions(suggestions);
+    }
 
-    // if (car.externalId.isNotEmpty) {
-    //   await service.saveCarInformation(car);
-    // }
+    if (car.externalId.isNotEmpty) {
+      await service.saveCarInformation(car);
+    }
 
     return (car, suggestions);
   }
 
-  /// Order By Similarity (Task 3: Bonus)
+  /// Order By Similarity (Task 3: Bonus) ✔️
   List<CarAdditionalInfo> _orderBySimilarity(
       List<CarAdditionalInfo> suggestions) {
     suggestions.sort(

@@ -43,6 +43,12 @@ class HomePageState extends State<HomePage> {
   int delay = 0;
 
   @override
+  void dispose() {
+    super.dispose();
+    focusNodeAutoComplete.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
