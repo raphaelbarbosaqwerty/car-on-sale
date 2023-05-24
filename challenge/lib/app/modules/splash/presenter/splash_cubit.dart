@@ -12,6 +12,8 @@ class SplashCubit extends Cubit<SplashState> {
     validateCachedUser().then((isCached) {
       if (isCached) {
         emit(SplashCacheFilledState());
+      } else {
+        emit(SplashCacheEmptyState());
       }
     }).onError((error, stackTrace) {
       if (error is UserNotFound) {

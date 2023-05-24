@@ -10,10 +10,16 @@ Step 1: ✔️
 
 ## Tests
 
+1. Usecases.
+2. Cubit.
+3. Services.
+4. Repositories
+
 ## Knowledge
 
 1. Services == Internal.
 2. Repositories == External.
+3. Removed the Datasource but why?
 
 ## Explain why decided to remove the Datasource.
 
