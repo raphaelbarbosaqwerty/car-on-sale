@@ -1,3 +1,4 @@
+import 'package:challenge/app/modules/home/presenter/widgets/logout/logout_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,13 +14,8 @@ class HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home"),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.logout,
-            ),
-          ),
+        actions: const [
+          LogoutWidget(),
         ],
       ),
       body: Center(
