@@ -1,7 +1,7 @@
 import 'package:challenge/app/core/domain/errors/user_errors.dart';
 import 'package:challenge/app/core/domain/models/user.dart';
 import 'package:challenge/app/core/domain/services/auth_service_interface.dart';
-import 'package:challenge/app/modules/auth/domain/save_user_data.dart';
+import 'package:challenge/app/modules/auth/domain/usecases/save_user_data.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

@@ -2,7 +2,7 @@ import 'package:challenge/app/core/domain/services/auth_service_interface.dart';
 import 'package:challenge/app/core/domain/usecases/do_logout.dart';
 import 'package:challenge/app/core/domain/usecases/validate_cached_user.dart';
 import 'package:challenge/app/core/infra/services/auth_service.dart';
-import 'package:challenge/app/modules/auth/domain/save_user_data.dart';
+import 'package:challenge/app/modules/auth/domain/usecases/save_user_data.dart';
 import 'package:challenge/app/modules/auth/presenter/auth_cubit.dart';
 import 'package:challenge/app/modules/home/domain/repositories/home_repository_interface.dart';
 import 'package:challenge/app/modules/home/domain/usecases/search_car_by_vin_number.dart';
