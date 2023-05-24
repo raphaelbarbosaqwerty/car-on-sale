@@ -32,6 +32,7 @@ dependencies:
     sdk: flutter
   hive: ^2.2.3
   bloc: ^8.1.2
+  http: ^1.0.0
   get_it: ^7.6.0
   equatable: ^2.0.5
   result_dart: ^1.0.6
@@ -45,8 +46,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  hive_generator: ^2.0.0
-  build_runner: ^2.4.4
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
