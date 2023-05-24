@@ -1,9 +1,10 @@
 import 'package:challenge/app/core/di.dart';
+import 'package:challenge/app/core/domain/models/car_additional_info.dart';
 import 'package:challenge/app/core/domain/validators/text_form_validator.dart';
-import 'package:challenge/app/core/widgets/cos_loading/cos_loading_widget.dart';
 import 'package:challenge/app/design/cos_theme.dart';
 import 'package:challenge/app/modules/home/presenter/home_cubit.dart';
 import 'package:challenge/app/modules/home/presenter/home_state.dart';
+import 'package:challenge/app/modules/home/presenter/widgets/cos_preview_car_suggestions/cos_preview_car_suggestions_widget.dart';
 import 'package:challenge/app/modules/home/presenter/widgets/logout/logout_widget.dart';
 import 'package:challenge/app/utils/delayed_action.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,8 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   final ValueNotifier isButtonValid = ValueNotifier(false);
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
+  final GlobalKey autoCompleteSuggestionsKey = GlobalKey();
+  final FocusNode focusNodeAutoComplete = FocusNode();
   final HomeCubit cubit = locator.get<HomeCubit>();
   late final TextEditingController code;
   int vinLength = 17;
@@ -70,6 +73,7 @@ class HomePageState extends State<HomePage> {
             }
           } else if (state is HomeSuccessState) {
             isButtonValid.value = true;
+            if (state.foundCar()) {}
           }
         },
         child: Padding(
@@ -80,27 +84,66 @@ class HomePageState extends State<HomePage> {
               autovalidateMode: AutovalidateMode.always,
               child: Column(
                 children: <Widget>[
-                  TextFormField(
-                    inputFormatters: [
-                      FilteringTextInputFormatter.deny(RegExp(r"\s\b|\b\s")),
-                      UpperCaseFormatter(),
-                    ],
-                    textCapitalization: TextCapitalization.characters,
-                    validator: (value) =>
-                        TextFormValidator.validateVinCode(value),
-                    onChanged: (value) {
-                      if (value.length == 17 && delay == 0) {
-                        isButtonValid.value = true;
-                      } else {
-                        isButtonValid.value = false;
-                      }
+                  BlocBuilder<HomeCubit, HomeState>(
+                    bloc: cubit,
+                    builder: (context, state) {
+                      return RawAutocomplete<CarAdditionalInfo>(
+                        textEditingController: code,
+                        focusNode: focusNodeAutoComplete,
+                        fieldViewBuilder: (
+                          context,
+                          textEditingController,
+                          focusNode,
+                          onFieldSubmitted,
+                        ) {
+                          return TextFormField(
+                            inputFormatters: [
+                              FilteringTextInputFormatter.deny(
+                                RegExp(r"\s\b|\b\s"),
+                              ),
+                              UpperCaseFormatter(),
+                            ],
+                            textCapitalization: TextCapitalization.characters,
+                            validator: (value) =>
+                                TextFormValidator.validateVinCode(value),
+                            onChanged: (value) {
+                              if (value.length == 17 && delay == 0) {
+                                isButtonValid.value = true;
+                              } else {
+                                isButtonValid.value = false;
+                              }
+                            },
+                            maxLength: 17,
+                            focusNode: focusNode,
+                            controller: textEditingController,
+                            decoration: const InputDecoration(
+                              hintText: "VIN Code",
+                              border: OutlineInputBorder(),
+                            ),
+                          );
+                        },
+                        optionsViewBuilder: (_, onSelected, optionsList) {
+                          if (state is HomeSuccessState) {
+                            final suggestions = state.suggestions;
+                            return CosPreviewCarSuggestionsWidget(
+                              suggestions: suggestions,
+                            );
+                          }
+
+                          return const SizedBox();
+                        },
+                        optionsBuilder: (_) {
+                          if (state is HomeSuccessState) {
+                            if (code.text.isNotEmpty &&
+                                code.text.length == 17) {
+                              return state.suggestions;
+                            }
+                          }
+
+                          return <CarAdditionalInfo>[];
+                        },
+                      );
                     },
-                    maxLength: 17,
-                    controller: code,
-                    decoration: const InputDecoration(
-                      hintText: "VIN Code",
-                      border: OutlineInputBorder(),
-                    ),
                   ),
                 ],
               ),
@@ -124,10 +167,6 @@ class HomePageState extends State<HomePage> {
               builder: (_) {
                 if (delay != 0) {
                   return Text("$delay");
-                }
-
-                if (!isValid && delay == 0) {
-                  return const CosLoadingWidget();
                 }
 
                 return const Icon(

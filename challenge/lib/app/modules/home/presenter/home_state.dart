@@ -1,4 +1,5 @@
 import 'package:challenge/app/core/domain/models/api_error.dart';
+import 'package:challenge/app/core/domain/models/car_additional_info.dart';
 import 'package:challenge/app/core/domain/models/car_information.dart';
 import 'package:equatable/equatable.dart';
 
@@ -11,13 +12,23 @@ class HomeLoadingState extends HomeState {
 
 class HomeSuccessState extends HomeState {
   final CarInformation carInformation;
+  final List<CarAdditionalInfo> suggestions;
 
-  HomeSuccessState(this.carInformation);
+  HomeSuccessState(this.carInformation, this.suggestions);
 
   @override
   List<Object?> get props => [
         carInformation,
+        suggestions,
       ];
+
+  bool foundCar() {
+    if (carInformation.externalId.isNotEmpty) {
+      return true;
+    }
+
+    return false;
+  }
 }
 
 class HomeErrorState extends HomeState {

@@ -35,4 +35,7 @@ class CarAdditionalInfo {
         "similarity": similarity,
         "externalId": externalId,
       };
+
+  static List<Map<String, dynamic>> toJsonList(List<CarAdditionalInfo> json) =>
+      json.map((e) => e.toJson()).toList();
 }

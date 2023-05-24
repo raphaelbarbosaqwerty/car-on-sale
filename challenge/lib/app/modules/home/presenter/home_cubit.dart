@@ -13,7 +13,10 @@ class HomeCubit extends Cubit<HomeState> {
     emit(HomeLoadingState());
     await Future.delayed(const Duration(seconds: 1));
     searchCarByVinNumber(vin).then((value) {
-      emit(HomeSuccessState(value));
+      emit(HomeSuccessState(
+        value.$1,
+        value.$2,
+      ));
     }).onError((Failure error, stackTrace) {
       if (error is InternalApiError) {
         emit(HomeErrorWithExtraState(error.message, error.extraError));

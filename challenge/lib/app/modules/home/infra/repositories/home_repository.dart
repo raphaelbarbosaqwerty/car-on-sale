@@ -17,6 +17,12 @@ class HomeRepository implements IHomeRepository {
   @override
   Future<(CarInformation, List<CarAdditionalInfo>)> searchCarByVin(
       String vin) async {
+    // final carListSimilarities = CarAdditionalInfo.fromJsonList(
+    //   jsonDecode(status300),
+    // );
+
+    // return (CarInformation(), carListSimilarities);
+
     try {
       final response = await client.get(
         Uri.https('anyUrl'),
@@ -74,3 +80,28 @@ const patternMatching = '''{
   "origin": "AUCTION",
   "estimationRequestId": "3a295387d07f"
 }''';
+
+const status300 = '''
+[
+    {
+        "make": "Toyota",
+        "model": "GT 86 Basis",
+        "containerName": "DE - Cp2 2.0 EU5, 2012 - 2015",
+        "similarity": 98,
+        "externalId": "DE001-018601450020001"
+    },
+    {
+        "make": "Toyota",
+        "model": "GT 86 Basis",
+        "containerName": "DE - Cp2 2.0 EU6, (EURO 6), 2015 - 2017",
+        "similarity": 50,
+        "externalId": "DE002-018601450020001"
+    },
+    {
+        "make": "Toyota",
+        "model": "GT 86 Basis",
+        "containerName": "DE - Cp2 2.0 EU6, Basis, 2017 - 2020",
+        "similarity": 0,
+        "externalId": "DE003-018601450020001"
+    }
+]''';

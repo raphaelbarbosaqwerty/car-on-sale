@@ -46,6 +46,9 @@ class AuthService implements IAuthService {
   }
 
   Future<Box> _getUserBox() async {
+    if (Hive.isBoxOpen(CosConstants.userBox)) {
+      return Hive.box(CosConstants.userBox);
+    }
     return await Hive.openBox(CosConstants.userBox);
   }
 }

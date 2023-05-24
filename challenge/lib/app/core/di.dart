@@ -5,8 +5,10 @@ import 'package:challenge/app/core/infra/services/auth_service.dart';
 import 'package:challenge/app/modules/auth/domain/usecases/save_user_data.dart';
 import 'package:challenge/app/modules/auth/presenter/auth_cubit.dart';
 import 'package:challenge/app/modules/home/domain/repositories/home_repository_interface.dart';
+import 'package:challenge/app/modules/home/domain/services/home_service_interface.dart';
 import 'package:challenge/app/modules/home/domain/usecases/search_car_by_vin_number.dart';
 import 'package:challenge/app/modules/home/infra/repositories/home_repository.dart';
+import 'package:challenge/app/modules/home/infra/services/home_service.dart';
 import 'package:challenge/app/modules/home/presenter/home_cubit.dart';
 import 'package:challenge/app/modules/home/presenter/widgets/logout/logout_cubit.dart';
 import 'package:challenge/app/modules/splash/presenter/splash_cubit.dart';
@@ -18,13 +20,14 @@ void setupLocator() {
   locator
       .registerLazySingleton<ISaveUserData>(() => SaveUserData(locator.get()));
   locator.registerLazySingleton<IAuthService>(() => AuthService());
+  locator.registerLazySingleton<IHomeService>(() => HomeService());
   locator.registerLazySingleton<HomeCubit>(() => HomeCubit(locator.get()));
   locator.registerLazySingleton<LogoutCubit>(() => LogoutCubit(locator.get()));
   locator.registerLazySingleton<IDoLogout>(() => DoLogout(locator.get()));
   locator.registerLazySingleton<IHomeRepository>(
       () => HomeRepository(CosChallenge.httpClient));
   locator.registerLazySingleton<ISearchCarByVinNumber>(
-      () => SearchCarByVinNumber(locator.get()));
+      () => SearchCarByVinNumber(locator.get(), locator.get()));
   locator.registerLazySingleton<IValidateCachedUser>(
     () => ValidateCachedUser(
       locator.get(),
