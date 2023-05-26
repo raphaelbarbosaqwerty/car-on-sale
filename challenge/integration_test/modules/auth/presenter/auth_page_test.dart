@@ -16,10 +16,10 @@ void main() {
       await Behaviors.login(tester);
       await tester.pumpAndSettle();
       expect(find.text('Home'), findsOneWidget);
-      await tester.pumpAndSettle();
       final logoutButton = find.byKey(const Key('logout'));
       await tester.tap(logoutButton);
       await tester.pumpAndSettle();
+      expect(find.text('Welcome'), findsOneWidget);
     });
   });
 }

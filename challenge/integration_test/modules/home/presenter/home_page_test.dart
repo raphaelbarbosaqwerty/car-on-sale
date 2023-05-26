@@ -22,10 +22,8 @@ void main() {
       expect(find.text('123456789AZCDVFDD'), findsOneWidget);
       final vinCode = find.byKey(const Key('search'));
       await tester.pumpAndSettle(const Duration(seconds: 2));
-      // await Future.delayed(const Duration(seconds: 2));
       await tester.tap(vinCode);
       await tester.pumpAndSettle(const Duration(seconds: 10));
-      // await Future.delayed(const Duration(seconds: 10));
       await tester.pumpAndSettle();
 
       // for (var i = 0; i < 8; i++) {
