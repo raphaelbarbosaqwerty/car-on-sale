@@ -96,21 +96,10 @@ void main() {
       await tester.tap(find.byKey(const Key('search')));
       await tester.pumpAndSettle();
       await Future.delayed(const Duration(seconds: 2));
-      await tester.tap(find.byKey(const Key('vinCode')));
+      expect(find.byKey(const Key('cos_preview_list')), findsOneWidget);
+      await tester.tap(find.byKey(const Key('close_alert_button')));
       await tester.pumpAndSettle();
-      await tester.showKeyboard(find.byKey(const Key('vinCode')));
-      await tester.pumpAndSettle();
-      await tester.enterText(
-        find.byKey(const Key('vinCode')),
-        "3VWLL7AJ0EM40851",
-      );
-      await tester.pumpAndSettle();
-      await tester.enterText(
-        find.byKey(const Key('vinCode')),
-        "3VWLL7AJ0EM408519",
-      );
-      await tester.pumpAndSettle();
-      await Future.delayed(const Duration(seconds: 2));
+      expect(find.byKey(const Key('cos_preview_list')), findsNothing);
     });
 
     testWidgets('should got status 400 and show the Snackbar error',

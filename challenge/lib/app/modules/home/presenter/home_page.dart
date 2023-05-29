@@ -81,6 +81,7 @@ class HomePageState extends State<HomePage> {
               showDialog(
                 context: context,
                 builder: (context) => CosPreviewCarSuggestionsWidget(
+                  key: const Key('cos_preview_list'),
                   suggestions: state.suggestions,
                 ),
               );

@@ -18,6 +18,7 @@ class CosPreviewCarSuggestionsWidget extends StatelessWidget {
           const Text("Suggestions"),
           const Spacer(),
           IconButton(
+            key: const Key('close_alert_button'),
             onPressed: () {
               Navigator.of(context).pop();
             },
