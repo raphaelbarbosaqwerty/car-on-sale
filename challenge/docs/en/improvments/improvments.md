@@ -15,3 +15,7 @@ I have some good things to improve on the testing part.
 ### Documentation
 
 I need to work more to improve the documentation.
+
+### Workflow
+
+On that situation I used the Github Actions to simulate the CI, but without the integration_tests parts, on my point of view we can do a good improvment here integratint the pipe line with Firebase/GCP to do tests in real devices.
