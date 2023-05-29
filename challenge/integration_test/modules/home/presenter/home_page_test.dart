@@ -95,7 +95,8 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const Key('search')));
       await tester.pumpAndSettle();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 4));
+      await tester.pumpAndSettle();
       expect(find.byKey(const Key('cos_preview_list')), findsOneWidget);
       await tester.tap(find.byKey(const Key('close_alert_button')));
       await tester.pumpAndSettle();
