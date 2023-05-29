@@ -2,7 +2,8 @@ name: Flutter Integration Tests
 on:
   push:
     branches:
-      - main
+      - production
+      - staging
 
 jobs:
   tests:
