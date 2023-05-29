@@ -32,8 +32,8 @@ https://github.com/felangel/bloc/issues/3848
 
 ## Github Workflow
 
-I setup a basic workflow for us to see the project doing the tetsts.
+I setup a basic workflow for us to see the project doing the tests.
 
 ## My thoughts
 
-I have a lot to improve on myself related to code/test/doc flow, but for that, I necessarily need to be surrounded by people who know more than me for this to happen, I can learn absurdly quickly.
+I have a lot to improve on myself related to code/test/doc flow, but for that, I necessarily need to be surrounded by people who know more than me for this to happen, I can learn absurdly quickly and I like to share knowledge, believe that way we can create a good ambient with the team to push up at the same time.
