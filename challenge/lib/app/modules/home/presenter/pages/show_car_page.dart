@@ -80,6 +80,7 @@ class _ShowCarPageState extends State<ShowCarPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        key: const Key('check_feedback'),
         backgroundColor:
             _hasPositiveFeedBack() ? CosTheme.greenAlert : CosTheme.redAlert,
         // elevation: ,
@@ -87,12 +88,14 @@ class _ShowCarPageState extends State<ShowCarPage> {
           if (widget.carInformation.positiveCustomerFeedback) {
             ScaffoldMessenger.of(context).showSnackBar(
               CosSnackBarSuccessWidget(
+                key: const Key('snack_bar'),
                 content: Text(widget.carInformation.feedback),
               ),
             );
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
               CosSnackBarErrorWidget(
+                key: const Key('snack_bar'),
                 content: Text(widget.carInformation.feedback),
               ),
             );

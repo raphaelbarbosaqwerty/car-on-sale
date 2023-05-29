@@ -5,13 +5,12 @@ import 'package:challenge/app/core/domain/usecases/validate_cached_user.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-// create a mock implementation of the IAuthService interface
 class MockAuthService extends Mock implements IAuthService {}
 
 void main() {
   late final MockAuthService service;
   late final IValidateCachedUser validateCachedUser;
-  final user = User(name: 'John Doe', email: 'john.doe@example.com');
+  const user = User(name: 'Raphael', email: 'raphael@test.com');
 
   setUpAll(() {
     service = MockAuthService();

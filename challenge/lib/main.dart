@@ -3,8 +3,11 @@ import 'package:challenge/app/core/di.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-void main() async {
-  setupLocator();
+Future<void> main({bool testing = false}) async {
+  if (!testing) {
+    setupLocator();
+  }
+
   await Hive.initFlutter();
   runApp(const MyApp());
 }

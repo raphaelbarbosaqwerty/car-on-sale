@@ -98,14 +98,14 @@ class _AuthPageState extends State<AuthPage> {
                       }
                       return ValueListenableBuilder(
                           valueListenable: isButtonValid,
-                          builder: (context, _isValid, _) {
+                          builder: (context, isValid, _) {
                             return ElevatedButton(
                               key: const Key("enter"),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor:
                                     CosTheme.grayDark, // Background color
                               ),
-                              onPressed: _isValid
+                              onPressed: isValid
                                   ? () async {
                                       await cubit.save(User(
                                         name: name.text,

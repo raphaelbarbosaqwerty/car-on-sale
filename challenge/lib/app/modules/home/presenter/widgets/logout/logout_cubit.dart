@@ -9,14 +9,15 @@ class LogoutCubit extends Cubit<LogoutState> {
   LogoutCubit(this.doLogout) : super(LogoutInitialState());
 
   Future<void> logout() async {
-    emit(LogoutLoadingState());
-    await Future.delayed(const Duration(seconds: 1));
-    doLogout().whenComplete(() {
+    try {
+      emit(LogoutLoadingState());
+      await Future.delayed(const Duration(seconds: 1));
+      await doLogout();
       emit(LogoutSuccessState());
-    }).onError((error, stackTrace) {
-      if (error is UnableToClearUserCredentials) {
-        emit(LogoutErrorState());
-      }
-    });
+    } on UnableToClearUserCredentials {
+      emit(LogoutErrorState());
+    } catch (error) {
+      emit(LogoutErrorState());
+    }
   }
 }

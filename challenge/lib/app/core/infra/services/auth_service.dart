@@ -36,10 +36,11 @@ class AuthService implements IAuthService {
   }
 
   @override
-  Future<void> logout() async {
+  Future<bool> logout() async {
     try {
       final userBox = await _getUserBox();
       userBox.clear();
+      return true;
     } catch (e) {
       throw UnableToClearUserCredentials();
     }

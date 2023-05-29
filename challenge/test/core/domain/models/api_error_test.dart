@@ -4,7 +4,7 @@ import 'package:challenge/app/core/domain/models/api_error.dart';
 import 'package:challenge/app/core/domain/models/api_error_params.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../../utils/mocks.dart';
+import '../../../shared/json_data.dart';
 
 void main() {
   group('ApiError', () {
@@ -15,8 +15,8 @@ void main() {
       expect(apiError.params.delaySeconds, 1337);
     });
 
-    test('toJson returns correct map with properties', () {
-      final apiError = ApiError(
+    test('should toJson returns correct map with properties', () {
+      const apiError = ApiError(
         msgKey: 'maintenance',
         message: 'Please try again in 1337 seconds',
         params: ApiErrorParams(delaySeconds: 1337),

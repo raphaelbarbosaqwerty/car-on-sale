@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:challenge/app/core/domain/models/car_additional_info.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../../utils/mocks.dart';
+import '../../../shared/json_data.dart';
 
 void main() {
   group('CarAdditionalInfo', () {

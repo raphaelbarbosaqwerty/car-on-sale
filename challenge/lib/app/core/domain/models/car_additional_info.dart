@@ -1,11 +1,15 @@
-class CarAdditionalInfo {
+// coverage:ignore-file
+
+import 'package:equatable/equatable.dart';
+
+class CarAdditionalInfo extends Equatable {
   final String make;
   final String model;
   final String containerName;
   final int similarity;
   final String externalId;
 
-  CarAdditionalInfo({
+  const CarAdditionalInfo({
     required this.make,
     required this.model,
     required this.containerName,
@@ -38,4 +42,13 @@ class CarAdditionalInfo {
 
   static List<Map<String, dynamic>> toJsonList(List<CarAdditionalInfo> json) =>
       json.map((e) => e.toJson()).toList();
+
+  @override
+  List<Object?> get props => [
+        make,
+        model,
+        containerName,
+        similarity,
+        externalId,
+      ];
 }

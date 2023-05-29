@@ -52,7 +52,7 @@ class HomeService implements IHomeService {
         await carBox.clear();
       }
       await carBox.put(
-        'suggestions',
+        'car',
         car.toJson(),
       );
     } catch (e) {
@@ -63,19 +63,19 @@ class HomeService implements IHomeService {
   @override
   Future<CarInformation> getCarInformation() async {
     try {
-      final suggestionBox = await _getBox(CosConstants.carsSuggestion);
-      final Map<String, dynamic> response = await suggestionBox.get(
+      final suggestionBox = await _getBox(CosConstants.carCached);
+      final response = await suggestionBox.get(
         'car',
-        defaultValue: <String, dynamic>{},
+        defaultValue: Map<String, dynamic>,
       );
 
       if (response.isEmpty) {
-        return CarInformation();
+        return const CarInformation();
       }
 
-      return CarInformation.fromJson(response);
+      return CarInformation.fromJson(Map.from(response));
     } catch (e) {
-      throw UnableToGetCarInformation();
+      return const CarInformation();
     }
   }
 

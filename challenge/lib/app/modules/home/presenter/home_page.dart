@@ -1,5 +1,4 @@
 import 'package:challenge/app/core/di.dart';
-import 'package:challenge/app/core/domain/models/car_additional_info.dart';
 import 'package:challenge/app/core/domain/models/car_information.dart';
 import 'package:challenge/app/core/domain/validators/text_form_validator.dart';
 import 'package:challenge/app/design/cos_theme.dart';
@@ -23,8 +22,6 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   final ValueNotifier isButtonValid = ValueNotifier(false);
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
-  final GlobalKey autoCompleteSuggestionsKey = GlobalKey();
-  final FocusNode focusNodeAutoComplete = FocusNode();
   final HomeCubit cubit = locator.get<HomeCubit>();
   late final TextEditingController code;
   int vinLength = 17;
@@ -43,13 +40,8 @@ class HomePageState extends State<HomePage> {
   int delay = 0;
 
   @override
-  void dispose() {
-    super.dispose();
-    focusNodeAutoComplete.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home"),
@@ -63,6 +55,7 @@ class HomePageState extends State<HomePage> {
           if (state is HomeErrorState) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
+                key: const Key('snack_bar_error'),
                 content: Text(state.message),
                 backgroundColor: CosTheme.redAlert,
               ),
@@ -71,6 +64,7 @@ class HomePageState extends State<HomePage> {
           } else if (state is HomeErrorWithExtraState) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
+                key: const Key('snack_bar_error'),
                 content: Text(state.message),
                 backgroundColor: CosTheme.redAlert,
               ),
@@ -81,8 +75,15 @@ class HomePageState extends State<HomePage> {
             }
           } else if (state is HomeSuccessState) {
             isButtonValid.value = true;
-            if (state.foundCar()) {
+            if (state.foundCar() && state.suggestions.isEmpty) {
               _moveToShowPage(state.carInformation);
+            } else if (state.suggestions.isNotEmpty) {
+              showDialog(
+                context: context,
+                builder: (context) => CosPreviewCarSuggestionsWidget(
+                  suggestions: state.suggestions,
+                ),
+              );
             }
           }
         },
@@ -93,72 +94,65 @@ class HomePageState extends State<HomePage> {
               key: _form,
               autovalidateMode: AutovalidateMode.always,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  TextFormField(
+                    key: const Key("vinCode"),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.deny(
+                        RegExp(r"\s\b|\b\s"),
+                      ),
+                      UpperCaseFormatter(),
+                    ],
+                    textCapitalization: TextCapitalization.characters,
+                    validator: (value) =>
+                        TextFormValidator.validateVinCode(value),
+                    onChanged: (value) {
+                      if (value.length == 17 && delay == 0) {
+                        isButtonValid.value = true;
+                      } else {
+                        isButtonValid.value = false;
+                      }
+                    },
+                    maxLength: 17,
+                    controller: code,
+                    decoration: const InputDecoration(
+                      hintText: "VIN Code",
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
                   BlocBuilder<HomeCubit, HomeState>(
                     bloc: cubit,
                     builder: (context, state) {
-                      return RawAutocomplete<CarAdditionalInfo>(
-                        textEditingController: code,
-                        focusNode: focusNodeAutoComplete,
-                        fieldViewBuilder: (
-                          context,
-                          textEditingController,
-                          focusNode,
-                          onFieldSubmitted,
-                        ) {
-                          return TextFormField(
-                            key: const Key("vinCode"),
-                            inputFormatters: [
-                              FilteringTextInputFormatter.deny(
-                                RegExp(r"\s\b|\b\s"),
+                      if (state is HomeSuccessState) {
+                        final car = state.carInformation;
+                        return Visibility(
+                          visible: state.foundCar(),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 24),
+                              Text(
+                                "Last aunction found",
+                                style: textTheme.bodyLarge?.copyWith(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
                               ),
-                              UpperCaseFormatter(),
+                              GestureDetector(
+                                onTap: () {
+                                  _moveToShowPage(car);
+                                },
+                                child: ListTile(
+                                  title: Text(
+                                    "Model: ${car.model}\nAunction ID: ${car.fkUuidAuction}",
+                                  ),
+                                ),
+                              ),
                             ],
-                            textCapitalization: TextCapitalization.characters,
-                            validator: (value) =>
-                                TextFormValidator.validateVinCode(value),
-                            onChanged: (value) {
-                              if (value.length == 17 && delay == 0) {
-                                isButtonValid.value = true;
-                              } else {
-                                isButtonValid.value = false;
-                              }
-                            },
-                            maxLength: 17,
-                            focusNode: focusNode,
-                            controller: textEditingController,
-                            decoration: const InputDecoration(
-                              hintText: "VIN Code",
-                              border: OutlineInputBorder(),
-                            ),
-                          );
-                        },
-                        optionsViewBuilder: (_, onSelected, optionsList) {
-                          if (state is HomeSuccessState) {
-                            final suggestions = state.suggestions;
-                            return GestureDetector(
-                              onTap: () {
-                                // _moveToShowPage(sugge);
-                              },
-                              child: CosPreviewCarSuggestionsWidget(
-                                suggestions: suggestions,
-                              ),
-                            );
-                          }
+                          ),
+                        );
+                      }
 
-                          return const SizedBox();
-                        },
-                        optionsBuilder: (_) {
-                          if (state is HomeSuccessState) {
-                            if (code.text.isNotEmpty &&
-                                code.text.length == 17) {
-                              return state.suggestions;
-                            }
-                          }
-
-                          return <CarAdditionalInfo>[];
-                        },
-                      );
+                      return const SizedBox();
                     },
                   ),
                 ],
@@ -193,7 +187,7 @@ class HomePageState extends State<HomePage> {
             ),
           );
         },
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 

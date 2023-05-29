@@ -1,7 +1,7 @@
 import 'package:challenge/app/core/domain/services/auth_service_interface.dart';
 
 abstract class IDoLogout {
-  Future<void> call();
+  Future<bool> call();
 }
 
 class DoLogout implements IDoLogout {
@@ -10,7 +10,7 @@ class DoLogout implements IDoLogout {
   DoLogout(this.service);
 
   @override
-  Future<void> call() async {
+  Future<bool> call() async {
     return await service.logout();
   }
 }

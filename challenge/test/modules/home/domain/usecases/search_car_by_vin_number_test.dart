@@ -5,6 +5,7 @@ import 'package:challenge/app/modules/home/domain/repositories/home_repository_i
 import 'package:challenge/app/modules/home/domain/services/home_service_interface.dart';
 import 'package:challenge/app/modules/home/domain/usecases/search_car_by_vin_number.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hive_test/hive_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockHomeRepository extends Mock implements IHomeRepository {}
@@ -16,24 +17,72 @@ void main() {
   late IHomeService service;
   late CarInformation carInformation;
   late MockHomeRepository repository;
+  late List<CarAdditionalInfo> suggestions;
   late ISearchCarByVinNumber searchCarByVinNumber;
 
   setUpAll(() {
+    setUpTestHive();
     service = MockHomeService();
     repository = MockHomeRepository();
     searchCarByVinNumber = SearchCarByVinNumber(repository, service);
-    vin = "DE003-018601450020008";
+    vin = "DE00301860145002A";
     carInformation = CarInformation(
       externalId: vin,
     );
+    suggestions = <CarAdditionalInfo>[
+      const CarAdditionalInfo(
+          make: "cos",
+          model: "cos-4",
+          containerName: "1234",
+          similarity: 98,
+          externalId: "3232"),
+      const CarAdditionalInfo(
+          make: "cos",
+          model: "cos-4",
+          containerName: "1234",
+          similarity: 24,
+          externalId: "3232"),
+    ];
   });
 
   group('SearchCarByVinNumber', () {
-    test('should return CarInformation if data exist', () async {
-      when(() => repository.searchCarByVin(vin))
-          .thenAnswer((_) async => (carInformation, <CarAdditionalInfo>[]));
+    test('should return and save CarInformation if data exist', () async {
+      when(() => repository.searchCarByVin(vin)).thenAnswer(
+        (_) async => (carInformation, <CarAdditionalInfo>[]),
+      );
+
+      when(() => service.saveCarInformation(carInformation)).thenAnswer(
+        (_) async => true,
+      );
+
+      when(() => service.getCarInformation()).thenAnswer(
+        (_) async => carInformation,
+      );
+
       final response = await searchCarByVinNumber(vin);
-      expect(response, isA<CarInformation>());
+      expect(response.$1, isA<CarInformation>());
+    });
+
+    test('should return and save List<CarAdditionalInfo> if data exist',
+        () async {
+      when(() => repository.searchCarByVin(vin)).thenAnswer(
+        (_) async => (const CarInformation(), suggestions),
+      );
+
+      when(() => service.saveCarInformation(carInformation)).thenAnswer(
+        (_) async => true,
+      );
+
+      when(() => service.saveSuggestions(suggestions)).thenAnswer(
+        (_) async => true,
+      );
+
+      when(() => service.getCarInformation()).thenAnswer(
+        (_) async => carInformation,
+      );
+
+      final response = await searchCarByVinNumber(vin);
+      expect(response.$2, isA<List<CarAdditionalInfo>>());
     });
 
     test('should return an Exception when VinCode is empty', () async {

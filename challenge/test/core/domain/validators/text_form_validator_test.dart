@@ -47,5 +47,9 @@ void main() {
         equals("Custom Invalid Email Message"),
       );
     });
+
+    test('validateVinCode should return null when valid VIN is provided', () {
+      expect(TextFormValidator.validateVinCode('2HGES16593H625011'), isNull);
+    });
   });
 }

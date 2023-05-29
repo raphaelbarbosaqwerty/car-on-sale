@@ -11,7 +11,7 @@ class MockAuthService extends Mock implements IAuthService {}
 void main() {
   late MockAuthService service;
   late ISaveUserData saveUserData;
-  final user = User(name: 'John Doe', email: 'john.doe@example.com');
+  const user = User(name: 'Raphael', email: 'raphael@test.com');
 
   setUpAll(() {
     service = MockAuthService();
@@ -26,7 +26,7 @@ void main() {
     });
 
     test('should return an Exception when credentials are empty', () async {
-      final user = User(name: '', email: '');
+      const user = User(name: '', email: '');
       when(() => service.saveUser(user)).thenThrow(EmptyCredentials());
       expect(() async => await saveUserData(user),
           throwsA(isA<EmptyCredentials>()));

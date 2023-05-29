@@ -1,4 +1,8 @@
-class CarInformation {
+// coverage:ignore-file
+
+import 'package:equatable/equatable.dart';
+
+class CarInformation extends Equatable {
   final String id;
   final String feedback;
   final DateTime? valuatedAt;
@@ -16,7 +20,7 @@ class CarInformation {
   final String origin;
   final String estimationRequestId;
 
-  CarInformation({
+  const CarInformation({
     this.id = "",
     this.feedback = "",
     this.valuatedAt,
@@ -55,7 +59,7 @@ class CarInformation {
       );
 
   static CarInformation fromMapWithPatternMatching(Map<String, dynamic> json) {
-    return CarInformation();
+    return const CarInformation();
   }
 
   Map<String, dynamic> toJson() => {
@@ -81,4 +85,24 @@ class CarInformation {
     final response = int.tryParse(price) ?? 0;
     return (response / 100).toString();
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        feedback,
+        valuatedAt,
+        requestedAt,
+        createdAt,
+        updatedAt,
+        make,
+        model,
+        externalId,
+        fkSellerUser,
+        price,
+        positiveCustomerFeedback,
+        fkUuidAuction,
+        inspectorRequestedAt,
+        origin,
+        estimationRequestId,
+      ];
 }

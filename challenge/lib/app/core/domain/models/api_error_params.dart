@@ -1,7 +1,9 @@
-class ApiErrorParams {
+import 'package:equatable/equatable.dart';
+
+class ApiErrorParams extends Equatable {
   final int delaySeconds;
 
-  ApiErrorParams({
+  const ApiErrorParams({
     this.delaySeconds = 0,
   });
 
@@ -14,4 +16,9 @@ class ApiErrorParams {
       };
 
   bool get hasDelay => delaySeconds != 0;
+
+  @override
+  List<Object?> get props => [
+        delaySeconds,
+      ];
 }

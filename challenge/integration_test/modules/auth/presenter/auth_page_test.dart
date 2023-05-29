@@ -1,36 +1,38 @@
+import 'package:challenge/app/modules/auth/presenter/auth_page.dart';
 import 'package:challenge/main.dart' as app;
-import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import '../../../utils/behaviors.dart';
+import '../../../utils/di.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-
-  Future<void> initialStepper(WidgetTester tester) async {
-    app.main();
-    await tester.pumpAndSettle();
-    expect(find.text('Welcome'), findsOneWidget);
-    await Behaviors.login(tester);
-    await tester.pumpAndSettle();
-    expect(find.text('Home'), findsOneWidget);
-    await tester.pumpAndSettle();
-  }
+  setUpAll(() {
+    setupTestsLocator();
+  });
 
   group('02. Authentication', () {
-    testWidgets('Validate if user can login', (tester) async {
-      await initialStepper(tester);
-      tearDownAll(() => tester);
+    testWidgets('should got error if try to login with invalid email',
+        (tester) async {
+      await app.main(testing: true);
+      await tester.pumpAndSettle();
+      expect(find.byType(AuthPage), findsOneWidget);
+      await Behaviors.login(tester, email: "raphael.com");
+      await tester.pumpAndSettle();
+      expect(find.text('Email invalid'), findsOneWidget);
     });
 
-    testWidgets('Validate if user can Logout and goes to AuthPage',
-        (tester) async {
-      await initialStepper(tester);
-      final logoutButton = find.byKey(const Key('logout'));
-      await tester.tap(logoutButton);
+    testWidgets('should do the login', (tester) async {
+      await app.main(testing: true);
       await tester.pumpAndSettle();
-      expect(find.text('Welcome'), findsOneWidget);
+      await Behaviors.shouldGoToHomePage(tester);
+      await tester.pumpAndSettle();
+    });
+    testWidgets('should do the logout', (tester) async {
+      await app.main(testing: true);
+      await Behaviors.logout(tester);
+      await tester.pumpAndSettle();
     });
   });
 }

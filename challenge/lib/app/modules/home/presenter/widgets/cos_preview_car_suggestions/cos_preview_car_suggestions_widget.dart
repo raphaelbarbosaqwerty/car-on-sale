@@ -1,4 +1,5 @@
 import 'package:challenge/app/core/domain/models/car_additional_info.dart';
+import 'package:challenge/app/core/widgets/cos_snack_bar/cos_snack_bar_success_widget.dart';
 import 'package:flutter/material.dart';
 
 class CosPreviewCarSuggestionsWidget extends StatelessWidget {
@@ -11,20 +12,43 @@ class CosPreviewCarSuggestionsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.topCenter,
-      child: Material(
-        elevation: 4.0,
+    return AlertDialog(
+      title: Row(
+        children: [
+          const Text("Suggestions"),
+          const Spacer(),
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(
+              Icons.close,
+            ),
+          ),
+        ],
+      ),
+      content: SingleChildScrollView(
         child: SizedBox(
-          height: 200.0,
+          width: double.maxFinite,
+          height: 250,
           child: ListView.builder(
-            padding: const EdgeInsets.all(8.0),
             itemCount: suggestions.length,
-            itemBuilder: (BuildContext context, int index) {
+            itemBuilder: (context, index) {
               final car = suggestions[index];
-              return ListTile(
-                title: Text(
-                  "${car.externalId} - ${car.make} - ${car.similarity}",
+              return GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pop();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const CosSnackBarSuccessWidget(
+                      key: Key('snack_bar'),
+                      content: Text("Looking for aunctions.."),
+                    ),
+                  );
+                },
+                child: ListTile(
+                  title: Text(
+                    "Model: ${car.model} - Similarity: ${car.similarity}",
+                  ),
                 ),
               );
             },

@@ -33,8 +33,8 @@ class SearchCarByVinNumber implements ISearchCarByVinNumber {
     if (car.externalId.isNotEmpty) {
       await service.saveCarInformation(car);
     }
-
-    return (car, suggestions);
+    final cachedCar = await service.getCarInformation();
+    return (_chooseCorrectCar(cachedCar, car), suggestions);
   }
 
   /// Order By Similarity (Task 3: Bonus) ✔️
@@ -44,5 +44,14 @@ class SearchCarByVinNumber implements ISearchCarByVinNumber {
       (a, b) => b.similarity.compareTo(a.similarity),
     );
     return suggestions;
+  }
+
+  /// Show cached car in all situations (Task 4: Bonus) ✔️
+  CarInformation _chooseCorrectCar(
+      CarInformation cacheCar, CarInformation car) {
+    if (car.id.isEmpty) {
+      return cacheCar;
+    }
+    return car;
   }
 }

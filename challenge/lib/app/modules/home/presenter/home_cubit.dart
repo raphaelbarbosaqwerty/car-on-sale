@@ -10,19 +10,20 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit(this.searchCarByVinNumber) : super(HomeLoadingState());
 
   Future<void> searchByVin(String vin) async {
-    emit(HomeLoadingState());
-    await Future.delayed(const Duration(seconds: 1));
-    searchCarByVinNumber(vin).then((value) {
+    try {
+      emit(HomeLoadingState());
+      await Future.delayed(const Duration(seconds: 1));
+      final response = await searchCarByVinNumber(vin);
       emit(HomeSuccessState(
-        value.$1,
-        value.$2,
+        response.$1,
+        response.$2,
       ));
-    }).onError((Failure error, stackTrace) {
-      if (error is InternalApiError) {
-        emit(HomeErrorWithExtraState(error.message, error.extraError));
-      } else {
-        emit(HomeErrorState(error.message));
-      }
-    });
+    } on InternalApiError catch (error) {
+      emit(HomeErrorWithExtraState(error.message, error.extraError));
+    } on Failure catch (error) {
+      emit(HomeErrorState(error.message));
+    } catch (e) {
+      emit(HomeErrorState("Please contact support."));
+    }
   }
 }

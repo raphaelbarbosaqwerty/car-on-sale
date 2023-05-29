@@ -6,7 +6,7 @@ import 'package:hive_test/hive_test.dart';
 
 void main() {
   late final AuthService authService;
-  final user = User(name: 'John Doe', email: 'john.doe@example.com');
+  const user = User(name: 'Raphael', email: 'raphael@test.com');
 
   setUpAll(() async {
     await setUpTestHive();

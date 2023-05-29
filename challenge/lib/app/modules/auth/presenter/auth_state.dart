@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+// coverage:ignore-file
 
 abstract class AuthState extends Equatable {}
 
@@ -18,6 +19,10 @@ class AuthSuccessState extends AuthState {
 }
 
 class AuthErrorState extends AuthState {
+  final String message;
+
+  AuthErrorState(this.message);
+
   @override
   List<Object?> get props => [];
 }

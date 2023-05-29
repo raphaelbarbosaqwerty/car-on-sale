@@ -9,9 +9,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../../../utils/mocks.dart';
-
-class MockHttpClient extends Mock implements BaseClient {}
+import '../../../../shared/json_data.dart';
+import '../../../../shared/mocks.dart';
 
 void main() {
   late MockHttpClient httpClient;
