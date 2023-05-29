@@ -25,10 +25,10 @@ jobs:
         run: flutter pub get
 
       - name: Unit tests
-        run: flutter test challenge/test/
+        run: flutter test test/
 
       - name: Integration tests
-        run: flutter test challenge/integration_test/
+        run: flutter test integration_test/
 
       - name: Release Android build
         run: flutter build appbundle
@@ -37,4 +37,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: android-release
-          path: challenge/build/app/outputs/bundle/release/app-release.aab
+          path: build/app/outputs/bundle/release/app-release.aab
