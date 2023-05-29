@@ -1,10 +1,10 @@
 # Architecture
 
-The choose architecture used is based on clean-architecture, trying to avoid over-engineering.
+The chosen architecture used is based on clean-architecture, trying to avoid over-engineering.
 
 ![image](architecture_flow.png)
 
-The idea is to has one flow only avoiding cyclical flows on the behavior.
+The idea is to have one flow only avoiding cyclical flows on the behavior.
 
 ## Datasource removed?
 

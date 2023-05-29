@@ -11,3 +11,7 @@ Without a doubt this is a part that is interesting to improve, currently, it is 
 ### Tests
 
 I have some good things to improve on the testing part.
+
+### Documentation
+
+I need to work more to improve the documentation.
