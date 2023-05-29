@@ -29,3 +29,11 @@ Regarding the error classes like **UserErros, ApiErrors, HomeErrors**, I decided
 During the development I had a slight problem with the Bloc tests, in some situations, the test hung for 30 seconds. More information is on the link below, the solution is already implemented here
 
 https://github.com/felangel/bloc/issues/3848
+
+## Github Workflow
+
+I setup a basic workflow for us to see the project doing the tetsts.
+
+## My thoughts
+
+I have a lot to improve on myself related to code/test/doc flow, but for that, I necessarily need to be surrounded by people who know more than me for this to happen, I can learn absurdly quickly.
