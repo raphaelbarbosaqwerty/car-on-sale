@@ -22,7 +22,7 @@ jobs:
           channel: "stable"
 
       - name: Run Flutter Pub Get
-        run: flutter pub get
+        run: flutter pub get challenge/
 
       - name: Unit tests
         run: flutter test challenge/test/
