@@ -7,6 +7,9 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: challenge/
     steps:
       - name: Get Repository
         uses: actions/checkout@v3
@@ -22,13 +25,13 @@ jobs:
           channel: "stable"
 
       - name: Run Flutter Pub Get
-        run: flutter pub get challenge/
+        run: flutter pub get
 
       - name: Unit tests
-        run: flutter test challenge/test/
+        run: flutter test test/
 
       - name: Integration tests
-        run: flutter test challenge/integration_test/
+        run: flutter test integration_test/
 
       - name: Release Android build
         run: flutter build appbundle
@@ -37,4 +40,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: android-release
-          path: challenge/build/app/outputs/bundle/release/app-release.aab
+          path: build/app/outputs/bundle/release/app-release.aab
