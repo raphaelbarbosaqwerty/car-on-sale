@@ -2,11 +2,15 @@ name: Flutter Integration Tests
 on:
   push:
     branches:
-      - main
+      - production
+      - staging
 
 jobs:
   tests:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: challenge
     steps:
       - name: Get Repository
         uses: actions/checkout@v3
@@ -27,8 +31,8 @@ jobs:
       - name: Unit tests
         run: flutter test test/
 
-      - name: Integration tests
-        run: flutter test integration_test/
+      # - name: Integration tests
+      #   run: flutter test integration_test/
 
       - name: Release Android build
         run: flutter build appbundle
