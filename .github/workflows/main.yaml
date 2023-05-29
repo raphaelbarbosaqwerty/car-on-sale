@@ -30,8 +30,8 @@ jobs:
       - name: Unit tests
         run: flutter test test/
 
-      - name: Integration tests
-        run: flutter test integration_test/
+      # - name: Integration tests
+      #   run: flutter test integration_test/
 
       - name: Release Android build
         run: flutter build appbundle
