@@ -12,6 +12,7 @@ Necessary version to build this app is: **Flutter version `3.10.0`**
 1. [About Modules](./challenge/docs/en/modules/modules.md)
 1. [Packages](./challenge/docs/en/packages/packages.md)
 1. [Tests](./challenge/docs/en/tests/tests.md)
+1. [Flows](./challenge/docs/en/flows/flow.md)
 
 ## Doubts about the challenge
 

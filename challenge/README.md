@@ -11,3 +11,5 @@
 ## 5. [Packages](./docs/en/packages/packages.md)
 
 ## 6. [Tests](./docs/en/tests/tests.md)
+
+## 7. [Flows](./docs/en/flows/flow.md)
